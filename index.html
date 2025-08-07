@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Auth Project</title>
+
+    <!-- Google Fonts: Noto Sans Thai -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-['Noto_Sans_Thai'] bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+
+    <div id="app" class="container mx-auto p-4">
+        <!-- Header: Theme and Language Switcher -->
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold">Auth App</h1>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="flex space-x-2">
+                    <button id="lang-th-btn" class="px-3 py-1 rounded-md text-sm font-medium bg-gray-200 dark:bg-gray-700">TH</button>
+                    <button id="lang-en-btn" class="px-3 py-1 rounded-md text-sm font-medium">EN</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Sign In Section -->
+            <section id="sign-in-section" class="max-w-md mx-auto">
+                <h2 class="text-2xl font-bold text-center mb-6">ลงชื่อเข้าใช้งาน</h2>
+                <form id="sign-in-form" class="space-y-4">
+                    <div>
+                        <label for="signin-email-user" class="block text-sm font-medium">อีเมล์ หรือ ชื่อผู้ใช้งาน</label>
+                        <input type="text" id="signin-email-user" required class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="signin-password" class="block text-sm font-medium">รหัสผ่าน</label>
+                        <input type="password" id="signin-password" required class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">ลงชื่อเข้าใช้</button>
+                </form>
+                <p class="mt-4 text-center text-sm">
+                    ยังไม่มีบัญชี? <a href="#" id="go-to-signup" class="font-medium text-indigo-600 hover:text-indigo-500">สมัครสมาชิก</a>
+                </p>
+            </section>
+
+            <!-- Sign Up Section (hidden by default) -->
+            <section id="sign-up-section" class="hidden max-w-md mx-auto">
+                <h2 class="text-2xl font-bold text-center mb-6">สมัครสมาชิก</h2>
+                <form id="sign-up-form" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="signup-firstname" class="block text-sm font-medium">ชื่อ</label>
+                            <input type="text" id="signup-firstname" required class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+                        </div>
+                        <div>
+                            <label for="signup-lastname" class="block text-sm font-medium">นามสกุล</label>
+                            <input type="text" id="signup-lastname" required class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="signup-email" class="block text-sm font-medium">อีเมล์</label>
+                        <input type="email" id="signup-email" required class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label for="signup-username" class="block text-sm font-medium">ชื่อผู้ใช้งาน</label>
+                        <input type="text" id="signup-username" required class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label for="signup-dob" class="block text-sm font-medium">วันเดือนปีเกิด</label>
+                        <input type="date" id="signup-dob" required class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label for="signup-password" class="block text-sm font-medium">รหัสผ่าน</label>
+                        <input type="password" id="signup-password" required class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+                    </div>
+                     <div>
+                        <label for="user-level" class="block text-sm font-medium">ระดับผู้ใช้งาน</label>
+                        <select id="user-level" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">สมัครสมาชิก</button>
+                </form>
+                <p class="mt-4 text-center text-sm">
+                    มีบัญชีอยู่แล้ว? <a href="#" id="go-to-signin" class="font-medium text-indigo-600 hover:text-indigo-500">ลงชื่อเข้าใช้</a>
+                </p>
+            </section>
+
+            <!-- Profile Section (hidden by default) -->
+            <section id="profile-section" class="hidden max-w-md mx-auto">
+                <h2 class="text-2xl font-bold text-center mb-6">ข้อมูลผู้ใช้งาน</h2>
+                <div id="profile-details" class="space-y-4 bg-gray-100 dark:bg-gray-800 p-6 rounded-lg">
+                    <!-- User details will be populated by JS -->
+                </div>
+                 <div id="edit-profile-form-container" class="hidden mt-6">
+                    <h3 class="text-xl font-bold text-center mb-4">แก้ไขข้อมูล</h3>
+                    <form id="edit-profile-form" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="edit-firstname" class="block text-sm font-medium">ชื่อ</label>
+                                <input type="text" id="edit-firstname" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+                            </div>
+                            <div>
+                                <label for="edit-lastname" class="block text-sm font-medium">นามสกุล</label>
+                                <input type="text" id="edit-lastname" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="edit-dob" class="block text-sm font-medium">วันเดือนปีเกิด</label>
+                            <input type="date" id="edit-dob" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+                        </div>
+                        <div class="flex justify-end space-x-2">
+                             <button type="button" id="cancel-edit-btn" class="py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">ยกเลิก</button>
+                             <button type="submit" class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">บันทึก</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="mt-6 text-center">
+                    <button id="edit-profile-btn" class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">แก้ไขข้อมูล</button>
+                    <button id="sign-out-btn" class="ml-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700">ออกจากระบบ</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- App Logic -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>
